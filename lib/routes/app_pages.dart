@@ -8,7 +8,6 @@ import 'package:manabie_interview/ui/done_task/done_task_screen.dart';
 import 'package:manabie_interview/ui/in_progress_task/in_progress_task_binding.dart';
 import 'package:manabie_interview/ui/in_progress_task/in_progress_task_screen.dart';
 
-
 part 'app_routes.dart';
 
 class AppPages {
@@ -35,6 +34,5 @@ class AppPages {
       page: () => BottomNavigationView(),
       binding: BottomNavigationBinding(),
     ),
-
   ];
 }

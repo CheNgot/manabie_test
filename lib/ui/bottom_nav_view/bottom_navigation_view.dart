@@ -5,16 +5,9 @@ import 'package:manabie_interview/shared/constant/common.dart';
 import 'package:manabie_interview/shared/utils/dimens.dart';
 import 'package:manabie_interview/ui/all_task/all_task_screen.dart';
 import 'package:manabie_interview/ui/done_task/done_task_screen.dart';
-import 'package:manabie_interview/ui/in_progress_task/in_progress_task_binding.dart';
 import 'package:manabie_interview/ui/in_progress_task/in_progress_task_screen.dart';
 
 import 'bottom_navigation_view_controller.dart';
-
-/*
-Created by ToanDev on 02/05/2021
-Company: Netacom.
-Email: hvtoan.dev@gmail.com
-*/
 
 class BottomNavigationView extends BaseView<BottomNavigationViewController> {
   @override
@@ -23,7 +16,7 @@ class BottomNavigationView extends BaseView<BottomNavigationViewController> {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
-            Common().string.title_app,
+            "To do",
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -48,7 +41,6 @@ class BottomNavigationView extends BaseView<BottomNavigationViewController> {
               AllTaskScreen(),
               DoneTaskScreen(),
               InProgressTaskScreen()
-
             ],
           ),
         ),

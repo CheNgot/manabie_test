@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manabie_interview/base/base_controller.dart';
-import 'package:manabie_interview/shared/constant/common.dart';
 import 'package:manabie_interview/shared/utils/dimens.dart';
 
 
-/*
-Created by ToanDev on 02/05/2021
-Company: Netacom.
-Email: hvtoan.dev@gmail.com
-*/
 
 class BottomNavigationViewController extends BaseController {
   // Fields
@@ -18,6 +12,7 @@ class BottomNavigationViewController extends BaseController {
   late List<BottomNavigationBarItem> _bottomNavigationBarItems;
 
   int get currentNavPageIndex => _currentNavPageIndex.value;
+
   List<BottomNavigationBarItem> get bottomNavigationBarItems =>
       _bottomNavigationBarItems;
 
@@ -47,7 +42,7 @@ class BottomNavigationViewController extends BaseController {
           ),
         ),
         label: "All task",
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
       ),
       BottomNavigationBarItem(
         icon: Container(
@@ -58,7 +53,7 @@ class BottomNavigationViewController extends BaseController {
           ),
         ),
         label: "Done",
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
       ),
       BottomNavigationBarItem(
         icon: Container(
@@ -69,10 +64,8 @@ class BottomNavigationViewController extends BaseController {
           ),
         ),
         label: "On Progress",
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
       ),
-
-
     ];
   }
 }
