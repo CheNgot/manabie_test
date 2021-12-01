@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manabie_interview/base/base_controller.dart';
+import 'package:manabie_interview/base/database/database.dart';
+import 'package:manabie_interview/base/database/entity/task.dart';
 import 'package:manabie_interview/shared/utils/dimens.dart';
 
 
@@ -27,6 +29,11 @@ class BottomNavigationViewController extends BaseController {
     super.onInit();
 
     _bottomNavigationBarItems = populateNavBar(withHeight: 36.w);
+    // insertTask(Task(2,"hoho",false));
+    // insertTask(Task(3,"hoho",true));
+    // deletetask(Task(2,"hoho",false));
+
+   // await listAllTask();
   }
 
   // Methods
@@ -68,4 +75,20 @@ class BottomNavigationViewController extends BaseController {
       ),
     ];
   }
+  void insertTask(Task task) {
+    Get.find<AppDb>().taskDao.insertPerson(task);
+
+  }
+
+  listAllTask() async {
+    var result= await Get.find<AppDb>().taskDao.listAllTask();
+    print(result.toString());
+  }
+
+  void deletetask(Task task) {
+    Get.find<AppDb>().taskDao.deleteTask(task);
+
+  }
 }
+
+

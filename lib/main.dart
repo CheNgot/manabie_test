@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manabie_interview/routes/app_pages.dart';
 
+import 'base/database/database.dart';
 import 'di.dart';
 import 'shared/logger/logger_utils.dart';
 
@@ -22,6 +23,8 @@ void initApp() {
 Future<void> initServices() async {
   print('starting services ...');
   await DependencyInjection.init();
+  await Get.putAsync<AppDb>(() => AppDb.init());
+
   print('All services started...');
 }
 
