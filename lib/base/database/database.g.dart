@@ -80,7 +80,7 @@ class _$AppDb extends AppDb {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Task` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `isComplete` INTEGER NOT NULL, `content` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Task` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `isComplete` INTEGER, `content` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -96,17 +96,30 @@ class _$AppDb extends AppDb {
 
 class _$TaskDao extends TaskDao {
   _$TaskDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database, changeListener),
+      : _queryAdapter = QueryAdapter(database),
         _taskInsertionAdapter = InsertionAdapter(
             database,
             'Task',
             (Task item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'isComplete': item.isComplete ? 1 : 0,
+                  'isComplete': item.isComplete == null
+                      ? null
+                      : (item.isComplete! ? 1 : 0),
                   'content': item.content
-                },
-            changeListener),
+                }),
+        _taskUpdateAdapter = UpdateAdapter(
+            database,
+            'Task',
+            ['id'],
+            (Task item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'isComplete': item.isComplete == null
+                      ? null
+                      : (item.isComplete! ? 1 : 0),
+                  'content': item.content
+                }),
         _taskDeletionAdapter = DeletionAdapter(
             database,
             'Task',
@@ -114,10 +127,11 @@ class _$TaskDao extends TaskDao {
             (Task item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'isComplete': item.isComplete ? 1 : 0,
+                  'isComplete': item.isComplete == null
+                      ? null
+                      : (item.isComplete! ? 1 : 0),
                   'content': item.content
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -127,47 +141,55 @@ class _$TaskDao extends TaskDao {
 
   final InsertionAdapter<Task> _taskInsertionAdapter;
 
+  final UpdateAdapter<Task> _taskUpdateAdapter;
+
   final DeletionAdapter<Task> _taskDeletionAdapter;
 
   @override
   Future<List<Task>> listAllTask() async {
     return _queryAdapter.queryList('SELECT * FROM Task',
         mapper: (Map<String, Object?> row) => Task(
-            row['id'] as int,
-            row['name'] as String,
-            (row['isComplete'] as int) != 0,
-            row['content'] as String));
+            id: row['id'] as int?,
+            name: row['name'] as String?,
+            content: row['content'] as String?,
+            isComplete: row['isComplete'] == null
+                ? null
+                : (row['isComplete'] as int) != 0));
   }
 
   @override
-  Stream<Task?> findTaskComplete() {
-    return _queryAdapter.queryStream(
-        'SELECT * FROM Task WHERE isComplete = : true',
+  Future<List<Task>> findTasksComplete() async {
+    return _queryAdapter.queryList('SELECT * FROM Task WHERE isComplete = true',
         mapper: (Map<String, Object?> row) => Task(
-            row['id'] as int,
-            row['name'] as String,
-            (row['isComplete'] as int) != 0,
-            row['content'] as String),
-        queryableName: 'Task',
-        isView: false);
+            id: row['id'] as int?,
+            name: row['name'] as String?,
+            content: row['content'] as String?,
+            isComplete: row['isComplete'] == null
+                ? null
+                : (row['isComplete'] as int) != 0));
   }
 
   @override
-  Stream<Task?> findTaskIncomplete() {
-    return _queryAdapter.queryStream(
-        'SELECT * FROM Task WHERE isComplete = : false',
+  Future<List<Task>> findTasksIncomplete() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Task WHERE isComplete = false',
         mapper: (Map<String, Object?> row) => Task(
-            row['id'] as int,
-            row['name'] as String,
-            (row['isComplete'] as int) != 0,
-            row['content'] as String),
-        queryableName: 'Task',
-        isView: false);
+            id: row['id'] as int?,
+            name: row['name'] as String?,
+            content: row['content'] as String?,
+            isComplete: row['isComplete'] == null
+                ? null
+                : (row['isComplete'] as int) != 0));
   }
 
   @override
   Future<void> insertPerson(Task task) async {
     await _taskInsertionAdapter.insert(task, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateTask(Task task) async {
+    await _taskUpdateAdapter.update(task, OnConflictStrategy.abort);
   }
 
   @override

@@ -10,18 +10,8 @@ import 'bottom_navigation_view_controller.dart';
 
 class BottomNavigationView extends BaseView<BottomNavigationViewController> {
   @override
-  Widget vBuilder() =>
-      Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            _showDialogAddTask();
-          },
-          label: const Text('Add task'),
-          icon: const Icon(Icons.add),
-          backgroundColor: Colors.blue,
-        ),
-        bottomNavigationBar: Obx(() =>
-            Theme(
+  Widget vBuilder() => Scaffold(
+        bottomNavigationBar: Obx(() => Theme(
               data: ThemeData(splashColor: Colors.transparent),
               child: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
@@ -36,17 +26,15 @@ class BottomNavigationView extends BaseView<BottomNavigationViewController> {
               ),
             )),
         body: Obx(
-              () =>
-              IndexedStack(
-                index: controller.currentNavPageIndex,
-                children: [
-                  AllTaskScreen(),
-                  DoneTaskScreen(),
-                  InProgressTaskScreen()
-                ],
-              ),
+          () => IndexedStack(
+            index: controller.currentNavPageIndex,
+            children: [
+              AllTaskScreen(),
+              DoneTaskScreen(),
+              InProgressTaskScreen()
+            ],
+          ),
         ),
       );
 
-  void _showDialogAddTask() {}
 }

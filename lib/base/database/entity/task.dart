@@ -3,17 +3,20 @@ import 'package:floor/floor.dart';
 @entity
 class Task {
   @PrimaryKey(autoGenerate: true)
-  final int id ;
+  final int? id ;
 
-  final String name ;
+  final String? name;
 
-  final bool isComplete;
-  final String content;
+   bool? isComplete;
+  final String? content;
 
   @override
   String toString() {
-    return 'Person{id: $id, name: $name, isComplete: $isComplete, content: $content}';
+    return 'Task{id: $id, name: $name, isComplete: $isComplete, content: $content}';
   }
+  Task({ this.id,
+    required this.name,
+    required this.content,
+    required this.isComplete});
 
-  Task(this.id, this.name, this.isComplete, this.content);
 }

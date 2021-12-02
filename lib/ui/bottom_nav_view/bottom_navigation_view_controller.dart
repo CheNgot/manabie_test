@@ -27,13 +27,10 @@ class BottomNavigationViewController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
-
+    listAllTask();
+    // getTasksInProgress();
     _bottomNavigationBarItems = populateNavBar(withHeight: 36.w);
-    // insertTask(Task(2,"hoho",false));
-    // insertTask(Task(3,"hoho",true));
-    // deletetask(Task(2,"hoho",false));
 
-   // await listAllTask();
   }
 
   // Methods
@@ -70,23 +67,32 @@ class BottomNavigationViewController extends BaseController {
             size: withHeight,
           ),
         ),
-        label: "On Progress",
+        label: "In Progress",
         backgroundColor: Colors.blue,
       ),
     ];
   }
-  void insertTask(Task task) {
+  void insertTask(String name,String content) {
+     var task= Task(name: name,content: content,isComplete: false);
     Get.find<AppDb>().taskDao.insertPerson(task);
+    update();
 
   }
 
   listAllTask() async {
     var result= await Get.find<AppDb>().taskDao.listAllTask();
     print(result.toString());
+    update();
   }
 
   void deletetask(Task task) {
     Get.find<AppDb>().taskDao.deleteTask(task);
+
+  }
+
+  getTasksInProgress() async {
+    var result= await Get.find<AppDb>().taskDao.findTasksIncomplete();
+    print(result);
 
   }
 }
