@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:manabie_interview/base/base_view_view_model.dart';
 import 'package:manabie_interview/base/database/entity/task.dart';
 import 'package:manabie_interview/shared/utils/dimens.dart';

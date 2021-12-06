@@ -4,6 +4,9 @@ import 'package:manabie_interview/base/base_controller.dart';
 import 'package:manabie_interview/base/database/database.dart';
 import 'package:manabie_interview/base/database/entity/task.dart';
 import 'package:manabie_interview/shared/utils/dimens.dart';
+import 'package:manabie_interview/ui/all_task/all_task_screen.dart';
+import 'package:manabie_interview/ui/done_task/done_task_screen.dart';
+import 'package:manabie_interview/ui/in_progress_task/in_progress_task_screen.dart';
 
 
 
@@ -12,6 +15,10 @@ class BottomNavigationViewController extends BaseController {
   RxInt _currentNavPageIndex = 0.obs;
 
   late List<BottomNavigationBarItem> _bottomNavigationBarItems;
+  var listWidget=[AllTaskScreen(),
+    DoneTaskScreen(),
+    InProgressTaskScreen()];
+  // var listWidget=[Text("1"),Text("2"),Text("3")];
 
   int get currentNavPageIndex => _currentNavPageIndex.value;
 
