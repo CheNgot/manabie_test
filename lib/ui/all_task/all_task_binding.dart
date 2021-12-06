@@ -20,6 +20,7 @@ class AllTaskController extends BaseController {
   void onInit() async {
     super.onInit();
     getListTask();
+    findTask(1);
   }
 
   getListTask() async {
@@ -39,11 +40,15 @@ class AllTaskController extends BaseController {
 
   void insertTask(String name, String content) {
     var task = Task(name: name, content: content, isComplete: false);
-    Get.find<AppDb>().taskDao.insertPerson(task);
+    Get.find<AppDb>().taskDao.insertTask(task);
     update();
     EventBusUtils.getInstance()?.fire(ChangeStateTask("insert task"));
 
 
+  }
+  void findTask(int id) async {
+    var temp = await Get.find<AppDb>().taskDao.findTask(id);
+    print( "temp =="+temp.toString());
   }
 
 }

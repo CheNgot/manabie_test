@@ -13,12 +13,17 @@ abstract class TaskDao {
   @Query('SELECT * FROM Task WHERE isComplete = false')
   Future<List<Task>> findTasksIncomplete();
 
+  @Query('SELECT * FROM Task WHERE id = :id')
+  Future<Task?> findTask(int id);
+
   @insert
-  Future<void> insertPerson(Task task);
+  Future<void> insertTask(Task task);
 
   @delete
   Future<void> deleteTask(Task task);
 
   @update
   Future<void> updateTask(Task task);
+
+
 }

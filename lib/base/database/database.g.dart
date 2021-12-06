@@ -183,7 +183,20 @@ class _$TaskDao extends TaskDao {
   }
 
   @override
-  Future<void> insertPerson(Task task) async {
+  Future<Task?> findTask(int id) async {
+    return _queryAdapter.query('SELECT * FROM Task WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => Task(
+            id: row['id'] as int?,
+            name: row['name'] as String?,
+            content: row['content'] as String?,
+            isComplete: row['isComplete'] == null
+                ? null
+                : (row['isComplete'] as int) != 0),
+        arguments: [id]);
+  }
+
+  @override
+  Future<void> insertTask(Task task) async {
     await _taskInsertionAdapter.insert(task, OnConflictStrategy.abort);
   }
 

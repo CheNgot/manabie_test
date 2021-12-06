@@ -15,9 +15,9 @@ class BottomNavigationViewController extends BaseController {
   RxInt _currentNavPageIndex = 0.obs;
 
   late List<BottomNavigationBarItem> _bottomNavigationBarItems;
-  var listWidget=[AllTaskScreen(),
-    DoneTaskScreen(),
-    InProgressTaskScreen()];
+  // var listWidget=[AllTaskScreen(),
+  //   DoneTaskScreen(),
+  //   InProgressTaskScreen()];
   // var listWidget=[Text("1"),Text("2"),Text("3")];
 
   int get currentNavPageIndex => _currentNavPageIndex.value;
@@ -81,10 +81,11 @@ class BottomNavigationViewController extends BaseController {
   }
   void insertTask(String name,String content) {
      var task= Task(name: name,content: content,isComplete: false);
-    Get.find<AppDb>().taskDao.insertPerson(task);
+    Get.find<AppDb>().taskDao.insertTask(task);
     update();
 
   }
+
 
   listAllTask() async {
     var result= await Get.find<AppDb>().taskDao.listAllTask();
