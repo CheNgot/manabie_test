@@ -57,18 +57,17 @@ void main() {
         expect(actual, isEmpty);
       });
 
-      test('update task', () async {
-        final task = Task(name: "test",content: "test132",isComplete: false);
+      test('update person', () async {
+        final task = Task(id: 3,name: "test12356",content: "check check",isComplete: false);
         await taskDao.insertTask(task);
-        final updateTask = Task(id: task.id, name: "test3",content: "test000",isComplete: true);
+        final updatedTask = Task(id:3, name: "test12356",content: "check check",isComplete: false);
 
-        await taskDao.updateTask(updateTask);
-        var taskId = task.id;
+        await taskDao.updateTask(updatedTask);
 
-        final actual = await taskDao.findTask(taskId!);
-        expect(actual, equals(updateTask));
+        final actual = await taskDao.findTask(3);
+      
+        expect(actual, equals(updatedTask));
       });
-
       // group('change multiple items', () {
       //   test('insert persons', () async {
       //     final persons = [Person(1, 'Simon'), Person(2, 'Frank')];
